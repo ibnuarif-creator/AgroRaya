@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroRaya – SIG Pertanian Kabupaten Kubu Raya</title>
+  <meta name="description" content="AgroRaya – Sistem Informasi Geografis Pertanian Kabupaten Kubu Raya, Kalimantan Barat. Jelajahi potensi pertanian 9 kecamatan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GQnc=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── MOBILE MENU ── -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#beranda">Beranda</a>
+    <a href="#kecamatan">Kecamatan</a>
+    <a href="#statistik">Statistik</a>
+    <a href="#tentang">Tentang</a>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="logo.png" alt="AgroRaya Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="logo-main">AgroRaya</span>
+          <span class="logo-sub">Kabupaten Kubu Raya</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#beranda" class="nav-link active">Beranda</a>
+        <a href="#kecamatan" class="nav-link">Kecamatan</a>
+        <a href="#statistik" class="nav-link">Statistik</a>
+        <a href="#tentang" class="nav-link">Tentang</a>
+      </div>
+      <div class="nav-badge">
+        <span class="badge-dot-nav"></span>
+        Kalimantan Barat
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO (Peta Interaktif) ===== -->
+  <section class="hero" id="beranda">
+    <div id="heroMap"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge animate-fade-up">
+        <span class="badge-dot"></span>
+        AgroRaya · Kabupaten Kubu Raya
+      </div>
+      <h1 class="hero-title animate-fade-up delay-1">
+        <span class="gradient-text">AgroRaya</span><br />
+        Pertanian Kubu Raya
+      </h1>
+      <p class="hero-desc animate-fade-up delay-2">
+        Jelajahi potensi pertanian, data wilayah, dan komoditas unggulan dari
+        setiap kecamatan di Kabupaten Kubu Raya, Kalimantan Barat.
+      </p>
+      <div class="hero-actions animate-fade-up delay-3">
+        <a href="#kecamatan" class="btn-primary">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Jelajahi Kecamatan</span>
+        </a>
+        <a href="#statistik" class="btn-ghost">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="M9 17V9M13 17V5M17 17v-4"/></svg>
+          Lihat Statistik
+        </a>
+      </div>
+      <div class="hero-meta animate-fade-up delay-3">
+        <div class="hero-meta-item"><strong>9</strong>Kecamatan</div>
+        <div class="hero-meta-sep"></div>
+        <div class="hero-meta-item"><strong>123</strong>Desa / Kelurahan</div>
+        <div class="hero-meta-sep"></div>
+        <div class="hero-meta-item"><strong>6.985 km²</strong>Luas Wilayah</div>
+        <div class="hero-meta-sep"></div>
+        <div class="hero-meta-item"><strong>657 Rb</strong>Penduduk</div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <span>Gulir ke bawah</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <section class="stats-bar" id="statistik">
+    <div class="stats-container">
+      <div class="stat-item reveal">
+        <div class="stat-icon">🏘️</div>
+        <div class="stat-number" data-target="9">0</div>
+        <div class="stat-label">Kecamatan</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-icon">🏡</div>
+        <div class="stat-number" data-target="123">0</div>
+        <div class="stat-label">Desa/Kelurahan</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-icon">🗺️</div>
+        <div class="stat-number" data-target="6985">0</div>
+        <div class="stat-label">Luas Wilayah (km²)</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number" data-target="657">0</div>
+        <div class="stat-label">Ribu Penduduk</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KECAMATAN GRID ===== -->
+  <section class="kecamatan-section" id="kecamatan">
+    <div class="section-header">
+      <div class="section-badge reveal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Peta Wilayah Kecamatan
+      </div>
+      <h2 class="section-title reveal reveal-delay-1">9 Kecamatan <span class="gradient-text">Kubu Raya</span></h2>
+      <p class="section-desc reveal reveal-delay-2">
+        Klik pada salah satu kecamatan untuk melihat informasi lengkap meliputi
+        data wilayah, peta lokasi interaktif, dan komoditas pertanian unggulan.
+      </p>
+    </div>
+
+    <div class="kecamatan-grid" id="kecamatanGrid">
+
+      <!-- 1. Sungai Raya -->
+      <div class="kec-card" id="card-sungai-raya" data-kec="sungai-raya" role="button" tabindex="0" aria-label="Kecamatan Sungai Raya">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="15,55 28,20 52,18 66,30 60,62 35,68" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="40" cy="42" r="5" fill="currentColor"/>
+              <line x1="40" y1="37" x2="40" y2="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="40" cy="21" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 01</div>
+            <h3 class="kec-name">Sungai Raya</h3>
+            <p class="kec-tagline">Ibu Kota Kabupaten</p>
+            <div class="kec-tags">
+              <span class="tag">🍍 Nanas</span>
+              <span class="tag">🌾 Padi</span>
+              <span class="tag">🥦 Hortikultura</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Sungai Kakap -->
+      <div class="kec-card" id="card-sungai-kakap" data-kec="sungai-kakap" role="button" tabindex="0" aria-label="Kecamatan Sungai Kakap">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="10,65 12,30 30,15 55,22 62,50 45,70" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="36" cy="44" r="5" fill="currentColor"/>
+              <line x1="36" y1="39" x2="36" y2="24" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="36" cy="23" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 02</div>
+            <h3 class="kec-name">Sungai Kakap</h3>
+            <p class="kec-tagline">Sentra Kelapa & Pinang</p>
+            <div class="kec-tags">
+              <span class="tag">🥥 Kelapa</span>
+              <span class="tag">🌴 Pinang</span>
+              <span class="tag">🌾 Padi</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Rasau Jaya -->
+      <div class="kec-card" id="card-rasau-jaya" data-kec="rasau-jaya" role="button" tabindex="0" aria-label="Kecamatan Rasau Jaya">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="20,60 18,35 38,18 62,28 65,55 42,65" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="42" cy="42" r="5" fill="currentColor"/>
+              <line x1="42" y1="37" x2="42" y2="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="42" cy="21" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 03</div>
+            <h3 class="kec-name">Rasau Jaya</h3>
+            <p class="kec-tagline">Kawasan Transmigrasi</p>
+            <div class="kec-tags">
+              <span class="tag">🍉 Semangka</span>
+              <span class="tag">🥥 Kelapa</span>
+              <span class="tag">🌾 Padi</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Sungai Ambawang -->
+      <div class="kec-card" id="card-sungai-ambawang" data-kec="sungai-ambawang" role="button" tabindex="0" aria-label="Kecamatan Sungai Ambawang">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="12,52 25,18 50,14 68,32 62,58 38,68" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="38" cy="40" r="5" fill="currentColor"/>
+              <line x1="38" y1="35" x2="38" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="38" cy="19" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 04</div>
+            <h3 class="kec-name">Sungai Ambawang</h3>
+            <p class="kec-tagline">Pengembangan Kopi Robusta</p>
+            <div class="kec-tags">
+              <span class="tag">☕ Kopi</span>
+              <span class="tag">🌽 Jagung</span>
+              <span class="tag">🌶️ Cabai</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Kubu -->
+      <div class="kec-card" id="card-kubu" data-kec="kubu" role="button" tabindex="0" aria-label="Kecamatan Kubu">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="8,62 10,28 32,12 60,20 68,52 50,70 22,68" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="38" cy="42" r="5" fill="currentColor"/>
+              <line x1="38" y1="37" x2="38" y2="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="38" cy="21" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 05</div>
+            <h3 class="kec-name">Kubu</h3>
+            <p class="kec-tagline">Kelapa Hibrida & Gula Merah</p>
+            <div class="kec-tags">
+              <span class="tag">🥥 Kelapa Hibrida</span>
+              <span class="tag">🍬 Gula Merah</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Batu Ampar -->
+      <div class="kec-card" id="card-batu-ampar" data-kec="batu-ampar" role="button" tabindex="0" aria-label="Kecamatan Batu Ampar">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="5,60 8,22 30,10 56,18 70,40 60,65 28,70" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="38" cy="40" r="5" fill="currentColor"/>
+              <line x1="38" y1="35" x2="38" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="38" cy="19" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 06</div>
+            <h3 class="kec-name">Batu Ampar</h3>
+            <p class="kec-tagline">Wilayah Pesisir Kalimantan</p>
+            <div class="kec-tags">
+              <span class="tag">🥥 Kelapa</span>
+              <span class="tag">🌿 Sagu</span>
+              <span class="tag">🐟 Perikanan</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Teluk Pakedai -->
+      <div class="kec-card" id="card-teluk-pakedai" data-kec="teluk-pakedai" role="button" tabindex="0" aria-label="Kecamatan Teluk Pakedai">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,62 14,35 35,15 58,24 65,52 45,68" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="40" cy="42" r="5" fill="currentColor"/>
+              <line x1="40" y1="37" x2="40" y2="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="40" cy="21" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 07</div>
+            <h3 class="kec-name">Teluk Pakedai</h3>
+            <p class="kec-tagline">Potensi Perairan Pesisir</p>
+            <div class="kec-tags">
+              <span class="tag">🌿 Sagu</span>
+              <span class="tag">🥥 Kelapa</span>
+              <span class="tag">🐟 Perikanan</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Terentang -->
+      <div class="kec-card" id="card-terentang" data-kec="terentang" role="button" tabindex="0" aria-label="Kecamatan Terentang">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="12,58 20,22 45,12 65,28 68,60 42,72 18,68" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="40" cy="40" r="5" fill="currentColor"/>
+              <line x1="40" y1="35" x2="40" y2="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="40" cy="19" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 08</div>
+            <h3 class="kec-name">Terentang</h3>
+            <p class="kec-tagline">Kawasan Hutan & Perkebunan</p>
+            <div class="kec-tags">
+              <span class="tag">🌳 Karet</span>
+              <span class="tag">🥥 Kelapa</span>
+              <span class="tag">🍯 Madu</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Kuala Mandor B -->
+      <div class="kec-card" id="card-kuala-mandor" data-kec="kuala-mandor" role="button" tabindex="0" aria-label="Kecamatan Kuala Mandor B">
+        <div class="kec-card-inner">
+          <div class="kec-map-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="18,55 22,25 44,15 62,30 60,60 38,68 20,62" fill="currentColor" opacity="0.18" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="40" cy="42" r="5" fill="currentColor"/>
+              <line x1="40" y1="37" x2="40" y2="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="40" cy="21" r="2.5" fill="currentColor" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="kec-info">
+            <div class="kec-number">Kecamatan 09</div>
+            <h3 class="kec-name">Kuala Mandor B</h3>
+            <p class="kec-tagline">Pengembangan Pertanian Organik</p>
+            <div class="kec-tags">
+              <span class="tag">🌳 Karet</span>
+              <span class="tag">🥬 Sayuran</span>
+              <span class="tag">🌾 Padi</span>
+            </div>
+          </div>
+          <div class="kec-cta">
+            Lihat Detail
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="tentang">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="AgroRaya Logo" class="logo-img footer-logo-img" />
+        <div>
+          <div class="footer-title">AgroRaya</div>
+          <div class="footer-subtitle">SIG Pertanian · Kabupaten Kubu Raya · Kalimantan Barat</div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>Data bersumber dari BPS Kabupaten Kubu Raya, Dinas Pertanian, dan sumber resmi pemerintah daerah.</p>
+        <p class="footer-copy">© 2025 AgroRaya · Universitas Tanjungpura</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL POPUP ===== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box" id="modalBox">
+
+      <button class="modal-close" id="modalClose" aria-label="Tutup">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="modal-header" id="modalHeader">
+        <div class="modal-map-icon" id="modalMapIcon"></div>
+        <div class="modal-header-text">
+          <div class="modal-number" id="modalNumber"></div>
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <p class="modal-tagline" id="modalTagline"></p>
+        </div>
+      </div>
+
+      <div class="modal-stats-row" id="modalStatsRow"></div>
+
+      <div class="modal-body">
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Lokasi & Titik Koordinat
+          </h3>
+          <div class="modal-map-wrapper">
+            <div id="modalLeafletMap"></div>
+            <div class="map-coord-badge" id="mapCoordBadge"></div>
+          </div>
+          <div class="coord-info-bar" id="coordInfoBar"></div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Gambaran Umum
+          </h3>
+          <p class="modal-desc" id="modalDesc"></p>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12c0-2.76 1.12-5.26 2.93-7.07"/><path d="M12 6v6l4 2"/></svg>
+            Komoditas Pertanian Unggulan
+          </h3>
+          <div class="modal-commodities" id="modalCommodities"></div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            Data Wilayah
+          </h3>
+          <div class="modal-data-grid" id="modalDataGrid"></div>
+        </div>
+
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Potensi Unggulan
+          </h3>
+          <ul class="modal-potensi" id="modalPotensi"></ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

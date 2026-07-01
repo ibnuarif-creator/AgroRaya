@@ -1,0 +1,847 @@
+/* ============================================================
+   SIG Pertanian Kubu Raya — AgriTech Dark Theme
+   ============================================================ */
+
+/* ── TOKENS ── */
+:root {
+  /* ── Light theme untuk konten (di bawah hero) ── */
+  --bg:            #F0F7F3;
+  --bg-alt:        #E4EFE9;
+  --surface:       #FFFFFF;
+  --surface-2:     #F5FAF7;
+  --surface-glass: rgba(255,255,255,0.90);
+
+  --accent:        #1E6B3C;
+  --accent-mid:    #155229;
+  --accent-light:  #2B8A50;
+  --accent-ghost:  rgba(30,107,60,0.08);
+  --accent-border: rgba(30,107,60,0.18);
+
+  --gold:          #D97706;
+  --gold-ghost:    rgba(217,119,6,0.10);
+
+  --text-1:        #0D1F16;
+  --text-2:        #2C5240;
+  --text-3:        #4A7860;
+
+  --border:        rgba(30,107,60,0.10);
+
+  --shadow-sm:     0 2px 12px rgba(13,31,22,0.06);
+  --shadow-md:     0 8px 32px rgba(13,31,22,0.10);
+  --shadow-lg:     0 24px 64px rgba(13,31,22,0.14);
+  --shadow-glow:   0 0 24px rgba(30,107,60,0.14);
+  --shadow-glow-lg:0 0 48px rgba(30,107,60,0.18);
+
+  --silk:          cubic-bezier(0.16, 1, 0.3, 1);
+  --silk-dur:      0.8s;
+
+  --radius:        14px;
+  --radius-lg:     22px;
+
+  --font-sans:     'Outfit', sans-serif;
+  --font-serif:    'Outfit', sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 80px; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-1);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; opacity: 0.020;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent-mid); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s var(--silk), transform 0.7s var(--silk);
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── HERO ANIMATION ── */
+.animate-fade-up {
+  opacity: 0; transform: translateY(22px);
+  animation: fadeUp 0.75s var(--silk) forwards;
+}
+.delay-1 { animation-delay: 0.12s; }
+.delay-2 { animation-delay: 0.26s; }
+.delay-3 { animation-delay: 0.42s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+@keyframes pulse-dot {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 20px 0;
+  border-bottom: 1px solid transparent;
+  transition: padding var(--silk-dur) var(--silk),
+              background var(--silk-dur) var(--silk),
+              border-color var(--silk-dur) var(--silk),
+              box-shadow var(--silk-dur) var(--silk);
+}
+.navbar.scrolled {
+  padding: 12px 0;
+  background: rgba(3,12,6,0.90);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--accent-border);
+  box-shadow: 0 0 40px rgba(43,122,78,0.06);
+}
+.nav-container {
+  max-width: 1160px; margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; gap: 1rem;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+.logo-img {
+  width: 40px; height: 40px;
+  border-radius: 50%; object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.20);
+  box-shadow: 0 0 14px rgba(43,122,78,0.35);
+  flex-shrink: 0;
+}
+.footer-logo-img {
+  width: 44px; height: 44px;
+  opacity: 0.92;
+}
+.logo-text { display: flex; flex-direction: column; line-height: 1.25; }
+.logo-main { font-size: 1rem; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; }
+.logo-sub  { font-size: 0.68rem; color: #7EEAA8; font-weight: 600; letter-spacing: 0.04em; }
+
+.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.nav-link {
+  font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.72);
+  padding: 7px 16px; border-radius: 100px;
+  border: 1px solid transparent;
+  transition: color 0.35s var(--silk), background 0.35s var(--silk), border-color 0.35s var(--silk);
+  letter-spacing: 0.01em;
+}
+.nav-link:hover, .nav-link.active {
+  color: #a8e6c0;
+  background: rgba(43,122,78,0.18);
+  border-color: rgba(43,122,78,0.38);
+}
+
+.nav-badge {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  margin-left: 0.25rem; padding: 6px 14px;
+  background: rgba(43,122,78,0.18); border: 1px solid rgba(43,122,78,0.38);
+  border-radius: 100px;
+  font-size: 0.73rem; font-weight: 700; color: #7EEAA8;
+  white-space: nowrap; letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(43,122,78,0.15);
+}
+.badge-dot-nav {
+  width: 6px; height: 6px;
+  background: #4CA872; border-radius: 50%;
+  animation: pulse-dot 2s ease infinite;
+  box-shadow: 0 0 6px #4CA872;
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; width: 32px; height: 32px; cursor: pointer;
+  margin-left: auto;
+}
+.nav-hamburger span {
+  display: block; width: 20px; height: 2px;
+  background: rgba(255,255,255,0.85); border-radius: 2px;
+  transition: all 0.4s var(--silk);
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(3,12,6,0.97);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 4px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s var(--silk);
+}
+.mobile-menu.open { opacity: 1; pointer-events: all; }
+.mobile-menu a {
+  font-size: 1.6rem; font-weight: 600; color: rgba(200,240,220,0.85);
+  padding: 12px 48px; border-radius: 100px;
+  border: 1px solid transparent;
+  letter-spacing: -0.02em;
+  opacity: 0; transform: translateY(16px);
+  transition: color 0.35s var(--silk), background 0.35s var(--silk), border-color 0.35s var(--silk),
+              opacity 0.5s var(--silk), transform 0.5s var(--silk);
+}
+.mobile-menu.open a { opacity: 1; transform: none; }
+.mobile-menu a:nth-child(1) { transition-delay: 0.05s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.10s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.20s; }
+.mobile-menu a:hover { color: #7EEAA8; background: rgba(43,122,78,0.18); border-color: rgba(43,122,78,0.38); }
+
+/* ============================================================
+   HERO — Background Image + Leaflet Markers
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 100vh; min-height: 640px;
+  display: flex; align-items: center; justify-content: flex-start;
+  overflow: hidden;
+  background: #030C06;
+}
+
+/* Layer 0: Leaflet map (dark tiles, far background) */
+#heroMap { position: absolute; inset: 0; z-index: 0; }
+#heroMap .leaflet-container { background: transparent !important; }
+#heroMap .leaflet-tile-pane { opacity: 0.12; filter: saturate(0.3) brightness(0.45); }
+
+/* Layer 1: webbackground.jpeg */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: url('webbackground.jpeg') center/cover no-repeat;
+  pointer-events: none;
+}
+
+/* Layer 2: directional overlay — gelap di kiri (teks), terang di kanan (gambar terlihat) */
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background:
+    linear-gradient(100deg,
+      rgba(3,12,6,0.94) 0%,
+      rgba(3,12,6,0.88) 28%,
+      rgba(3,12,6,0.60) 52%,
+      rgba(3,12,6,0.18) 72%,
+      rgba(3,12,6,0.05) 100%),
+    linear-gradient(to top, rgba(3,12,6,0.65) 0%, transparent 22%);
+  pointer-events: none;
+}
+
+/* Markers tetap terlihat di atas semua layer */
+#heroMap .leaflet-marker-pane,
+#heroMap .leaflet-overlay-pane,
+#heroMap .leaflet-popup-pane { position: relative; z-index: 3 !important; }
+
+/* Hero content — kiri, tidak ada kotak gelap */
+.hero-content {
+  position: relative; z-index: 4;
+  text-align: left;
+  max-width: 560px;
+  padding: 0;
+  margin-left: max(28px, calc((100vw - 1160px) / 2 + 32px));
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 6px 16px 6px 10px;
+  background: rgba(43,122,78,0.15); border: 1px solid var(--accent-border);
+  border-radius: 100px;
+  font-size: 0.75rem; font-weight: 600; color: #a8e6c0;
+  margin-bottom: 1.5rem; letter-spacing: 0.08em; text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(43,122,78,0.20);
+  animation: badgeGlow 3s ease-in-out infinite;
+}
+@keyframes badgeGlow {
+  0%,100% { box-shadow: 0 0 16px rgba(43,122,78,0.18); }
+  50%      { box-shadow: 0 0 32px rgba(43,122,78,0.38); }
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  background: var(--accent-light); border-radius: 50%;
+  animation: pulse-dot 2s ease infinite;
+  box-shadow: 0 0 6px var(--accent-light);
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+  color: #ffffff; margin-bottom: 1.2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.95), 0 8px 32px rgba(0,0,0,0.65);
+}
+.gradient-text {
+  font-style: italic;
+  color: #7EEAA8;
+}
+.section-title .gradient-text {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-desc {
+  font-size: 1.05rem; color: rgba(255,255,255,0.85);
+  max-width: 480px; margin: 0 0 2rem;
+  line-height: 1.8;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.90);
+}
+.hero-actions { display: flex; align-items: center; justify-content: flex-start; gap: 1rem; flex-wrap: wrap; }
+
+/* Hero meta info bar */
+.hero-meta {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 2rem; padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  font-size: 0.825rem; color: rgba(255,255,255,0.60); font-weight: 400;
+}
+.hero-meta-item strong {
+  color: #a8e6c0; font-weight: 700; font-size: 1rem; margin-right: 4px;
+}
+.hero-meta-sep {
+  width: 1px; height: 16px; background: rgba(255,255,255,0.18);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 13px 28px;
+  background: var(--accent); color: #ffffff;
+  font-family: var(--font-sans); font-weight: 700; font-size: 0.9375rem;
+  border-radius: 100px; letter-spacing: -0.01em;
+  box-shadow: 0 6px 24px rgba(30,107,60,0.40);
+  transition: background 0.4s var(--silk), transform 0.35s var(--silk), box-shadow 0.4s var(--silk);
+}
+.btn-primary:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(30,107,60,0.55);
+}
+/* Ghost button — used in hero (dark bg), so keep light text */
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 12px 28px;
+  border: 1.5px solid rgba(255,255,255,0.28); color: rgba(255,255,255,0.88);
+  font-family: var(--font-sans); font-weight: 500; font-size: 0.9375rem;
+  border-radius: 100px; background: rgba(255,255,255,0.06);
+  transition: border-color 0.4s var(--silk), background 0.4s var(--silk),
+              color 0.4s var(--silk), transform 0.35s var(--silk);
+}
+.btn-ghost:hover {
+  border-color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.hero-scroll-indicator {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  color: rgba(110,231,183,0.45); font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+  animation: fade-bounce 2.5s ease infinite;
+}
+.scroll-line { width: 1.5px; height: 36px; background: linear-gradient(to bottom, rgba(43,122,78,0.5), transparent); }
+@keyframes fade-bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.stats-bar::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 120% at center, rgba(43,122,78,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.stats-container {
+  max-width: 1160px; margin: 0 auto; padding: 0 32px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  position: relative; z-index: 1;
+}
+.stat-item {
+  padding: 52px 32px; text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background var(--silk-dur) var(--silk);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(43,122,78,0.04); }
+.stat-item::before {
+  content: ''; display: block;
+  width: 28px; height: 2px; background: var(--accent);
+  border-radius: 2px; margin: 0 auto 18px;
+  box-shadow: 0 0 14px rgba(43,122,78,0.65);
+  transition: width 0.5s var(--silk);
+}
+.stat-item:hover::before { width: 56px; }
+.stat-divider { display: none; }
+.stat-icon { font-size: 1.4rem; margin-bottom: 6px; }
+.stat-number {
+  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-weight: 700; color: var(--accent);
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 0.75rem; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.10em;
+}
+
+/* ============================================================
+   KECAMATAN SECTION
+   ============================================================ */
+.kecamatan-section {
+  padding: 100px 0;
+  background: var(--bg-alt);
+  position: relative; overflow: hidden;
+}
+/* Dot-grid pattern */
+.kecamatan-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(43,122,78,0.09) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.kecamatan-section .section-header,
+.kecamatan-section .kecamatan-grid {
+  max-width: 1160px;
+  margin-left: auto; margin-right: auto;
+  padding-left: 32px; padding-right: 32px;
+  position: relative; z-index: 1;
+}
+
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent);
+  background: var(--accent-ghost); border: 1px solid var(--accent-border);
+  padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
+  box-shadow: 0 0 16px rgba(43,122,78,0.10);
+}
+.section-title {
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+  font-weight: 700; color: var(--text-1);
+  letter-spacing: -0.03em; margin-bottom: 16px; line-height: 1.15;
+}
+.section-desc {
+  max-width: 520px; margin: 0 auto;
+  color: var(--text-3); font-size: 1rem; line-height: 1.80;
+}
+
+/* GRID */
+.kecamatan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* ── CARD ── */
+.kec-card {
+  position: relative;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer; overflow: hidden;
+  transition: opacity 0.6s var(--silk),
+              transform var(--silk-dur) var(--silk),
+              box-shadow var(--silk-dur) var(--silk),
+              border-color var(--silk-dur) var(--silk);
+  box-shadow: var(--shadow-sm);
+  opacity: 0; transform: translateY(28px);
+}
+.kec-card.visible { opacity: 1; transform: translateY(0); }
+.kec-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  border-color: var(--accent-border);
+}
+.kec-card:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.kec-card-inner { display: flex; flex-direction: column; height: 100%; }
+
+.kec-map-icon {
+  width: 100%; height: 168px;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  display: block;
+}
+
+/* Injected by JS — zoomable map image layer */
+.kec-img {
+  position: absolute; inset: 0; z-index: 0;
+  background-color: #f0f7f3;
+  background-size: 78%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.7s var(--silk);
+}
+.kec-card:hover .kec-img { transform: scale(1.06); }
+
+/* Gambar peta per kecamatan */
+.kec-card[data-kec="sungai-raya"]     .kec-img { background-image: url('gambar/Peta_Sungai_Raya.png'); }
+.kec-card[data-kec="sungai-kakap"]    .kec-img { background-image: url('gambar/Peta_Sungai_Kakap.png'); }
+.kec-card[data-kec="rasau-jaya"]      .kec-img { background-image: url('gambar/Peta_Rasau_Jaya.png'); }
+.kec-card[data-kec="sungai-ambawang"] .kec-img { background-image: url('gambar/Peta_Sungai_Ambawang.png'); }
+.kec-card[data-kec="kubu"]            .kec-img { background-image: url('gambar/Peta_Kubu.png'); }
+.kec-card[data-kec="batu-ampar"]      .kec-img { background-image: url('gambar/Peta_Batu_Ampar.png'); }
+.kec-card[data-kec="teluk-pakedai"]   .kec-img { background-image: url('gambar/Peta_Teluk_Pakedai.png'); }
+.kec-card[data-kec="terentang"]       .kec-img { background-image: url('gambar/Peta_Terentang.png'); }
+.kec-card[data-kec="kuala-mandor"]    .kec-img { background-image: url('gambar/Peta_Kuala_Mandor_B.png'); }
+
+/* Bottom shadow — batas bawah area peta */
+.kec-map-icon::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.18) 100%);
+}
+
+/* Top accent line on hover */
+.kec-map-icon::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 3;
+  background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
+  opacity: 0; transition: opacity var(--silk-dur) var(--silk);
+}
+.kec-card:hover .kec-map-icon::after { opacity: 1; }
+
+/* Hide old SVG placeholders — no longer needed */
+.kec-map-icon svg { display: none; }
+
+.kec-info { padding: 20px 22px 14px; flex: 1; }
+.kec-number {
+  font-size: 0.68rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; opacity: 0.7;
+}
+.kec-name {
+  font-size: 1.1rem; font-weight: 700; color: var(--text-1);
+  letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 4px;
+}
+.kec-tagline { font-size: 0.80rem; color: var(--text-3); font-weight: 500; margin-bottom: 12px; }
+.kec-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  display: inline-block; padding: 3px 10px;
+  background: var(--accent-ghost); border: 1px solid var(--border);
+  border-radius: 100px; font-size: 0.69rem; font-weight: 600; color: var(--text-2);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.kec-card:hover .tag { background: rgba(43,122,78,0.14); border-color: var(--accent-border); color: var(--accent); }
+
+.kec-cta {
+  display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+  padding: 12px 22px; font-size: 0.8rem; font-weight: 600; color: var(--text-3);
+  border-top: 1px solid var(--border); background: var(--surface);
+  transition: color 0.3s, background 0.3s;
+}
+.kec-card:hover .kec-cta { color: var(--accent); background: rgba(43,122,78,0.07); }
+.kec-cta svg { transition: transform var(--silk-dur) var(--silk); }
+.kec-card:hover .kec-cta svg { transform: translateX(4px); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background: #020807;
+  border-top: 1px solid var(--border);
+  padding: 56px 0 32px;
+}
+.footer-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 32px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+  border-bottom: 1px solid rgba(43,122,78,0.08); margin-bottom: 28px;
+}
+.footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+.footer-title { font-weight: 700; font-size: 1rem; color: #ffffff; }
+.footer-subtitle { font-size: 0.72rem; color: rgba(176,220,200,0.55); margin-top: 2px; }
+.footer-info { text-align: right; }
+.footer-info p { font-size: 0.82rem; color: rgba(176,220,200,0.50); line-height: 1.75; }
+.footer-copy { color: rgba(176,220,200,0.30) !important; margin-top: 0.3rem; font-size: 0.78rem !important; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(3,12,6,0.90);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.4s var(--silk), visibility 0.4s var(--silk);
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+
+.modal-box {
+  position: relative;
+  background: var(--surface-2); border: 1px solid var(--accent-border);
+  border-radius: var(--radius-lg);
+  width: 100%; max-width: 820px; max-height: 92vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-lg);
+  transform: translateY(28px) scale(0.97);
+  transition: transform 0.5s var(--silk);
+}
+.modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+
+.modal-box::-webkit-scrollbar { width: 4px; }
+.modal-box::-webkit-scrollbar-track { background: transparent; }
+.modal-box::-webkit-scrollbar-thumb { background: var(--accent-mid); border-radius: 99px; }
+
+.modal-close {
+  position: sticky; top: 1rem; float: right;
+  margin: 1rem 1rem 0 0; z-index: 20;
+  width: 36px; height: 36px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 50%;
+  color: var(--text-3); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  flex-shrink: 0;
+}
+.modal-close:hover { background: rgba(239,68,68,0.12); color: #f87171; border-color: rgba(239,68,68,0.3); }
+
+.modal-header {
+  display: flex; align-items: flex-start; gap: 1.1rem;
+  padding: 1.75rem 2rem 1.25rem;
+  margin-top: -44px; padding-top: 1.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.modal-map-icon {
+  width: 88px; height: 88px;
+  background: #f0f7f3; border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(30,107,60,0.12);
+}
+.modal-map-icon img {
+  width: 100%; height: 100%;
+  object-fit: contain; padding: 6px;
+}
+.modal-map-icon svg { width: 60px; height: 60px; }
+.modal-header-text { flex: 1; padding-top: 0.2rem; }
+.modal-number {
+  font-size: 0.7rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; opacity: 0.65;
+}
+.modal-title { font-size: 1.6rem; font-weight: 700; color: var(--text-1); letter-spacing: -0.03em; line-height: 1.18; }
+.modal-tagline { font-size: 0.86rem; color: var(--text-3); margin-top: 4px; font-weight: 500; }
+
+.modal-stats-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 1.1rem 2rem; border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.modal-stat {
+  flex: 1; min-width: 110px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; text-align: center;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.modal-stat:hover { border-color: var(--accent-border); box-shadow: 0 0 16px rgba(43,122,78,0.10); }
+.modal-stat-val {
+  font-size: 1.1rem; font-weight: 700; color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.modal-stat-key {
+  font-size: 0.68rem; color: var(--text-3); margin-top: 4px;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.modal-body { padding: 1.5rem 2rem 2.5rem; display: flex; flex-direction: column; gap: 1.75rem; }
+.modal-section-title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; color: var(--accent);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.modal-section-title svg { color: var(--accent-light); }
+
+.modal-map-wrapper {
+  position: relative;
+  border-radius: var(--radius) var(--radius) 0 0; overflow: hidden;
+  border: 1px solid var(--border); border-bottom: none;
+  box-shadow: var(--shadow-sm);
+}
+#modalLeafletMap { height: 300px; width: 100%; }
+
+/* Badge koordinat di atas peta — ikon pin + koordinat */
+.map-coord-badge {
+  position: absolute; bottom: 12px; left: 12px;
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+  border: 1px solid rgba(30,107,60,0.22); border-radius: 10px;
+  padding: 7px 14px 7px 10px;
+  font-size: 0.75rem; font-weight: 700; color: var(--accent);
+  font-family: 'Courier New', monospace; z-index: 500;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+}
+.map-coord-badge svg { flex-shrink: 0; color: var(--accent); }
+
+/* Panel info koordinat di bawah peta */
+.coord-info-bar {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border); border-radius: 0 0 var(--radius) var(--radius);
+  overflow: hidden; background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.coord-box {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 12px; gap: 5px; position: relative;
+  transition: background 0.3s;
+}
+.coord-box:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 20%; bottom: 20%;
+  width: 1px; background: var(--border);
+}
+.coord-box:hover { background: var(--surface-2); }
+.coord-box-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent-ghost); border: 1px solid var(--accent-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-bottom: 2px;
+}
+.coord-box-icon svg { width: 15px; height: 15px; }
+.coord-box-label {
+  font-size: 0.62rem; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.10em;
+}
+.coord-box-value {
+  font-size: 0.85rem; font-weight: 700; color: var(--accent);
+  font-family: 'Courier New', monospace; letter-spacing: 0.02em;
+}
+.coord-box-sub {
+  font-size: 0.62rem; color: var(--text-3); font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+.modal-desc { font-size: 0.94rem; color: var(--text-2); line-height: 1.85; }
+
+.modal-commodities { display: flex; flex-wrap: wrap; gap: 8px; }
+.comm-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px;
+  background: var(--accent-ghost); border: 1px solid var(--accent-border);
+  border-radius: var(--radius); font-size: 0.82rem; font-weight: 600; color: var(--text-2);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+.comm-badge:hover { border-color: var(--accent); background: rgba(43,122,78,0.16); color: var(--accent); }
+
+.modal-data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.data-row {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; font-size: 0.84rem;
+  transition: border-color 0.3s;
+}
+.data-row:hover { border-color: var(--accent-border); }
+.data-key { color: var(--text-3); font-weight: 500; }
+.data-val { color: var(--text-1); font-weight: 700; }
+
+.modal-potensi { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.modal-potensi li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.91rem; color: var(--text-2); line-height: 1.7;
+  padding: 12px 14px;
+  background: var(--surface); border-radius: var(--radius);
+  border-left: 2px solid var(--accent);
+  transition: border-color 0.3s, background 0.3s;
+}
+.modal-potensi li:hover { border-left-color: var(--accent-light); background: rgba(43,122,78,0.04); }
+.modal-potensi li::before {
+  content: '✦'; color: var(--accent);
+  flex-shrink: 0; margin-top: 2px; font-size: 0.72rem;
+  text-shadow: 0 0 8px rgba(43,122,78,0.5);
+}
+
+/* ============================================================
+   LEAFLET
+   ============================================================ */
+.leaflet-control-attribution { font-size: 9px !important; }
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  font-family: var(--font-sans) !important;
+  box-shadow: var(--shadow-md), var(--shadow-glow) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--accent-border) !important;
+  color: var(--text-1) !important;
+}
+.leaflet-popup-content {
+  margin: 10px 14px !important; font-size: 13px !important;
+  font-weight: 600 !important; color: var(--text-1) !important;
+  line-height: 1.5 !important;
+}
+.leaflet-popup-tip { background: var(--surface-2) !important; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .stats-container { grid-template-columns: repeat(2, 1fr); }
+  /* Stat items: nth-child 1,3,5,7 (dividers at 2,4,6 are display:none) */
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  /* Col 1 items (nth-child 1 & 5): add right border */
+  .stat-item:nth-child(1),
+  .stat-item:nth-child(5) { border-right: 1px solid var(--border); }
+  /* Row 2 items (nth-child 5 & last): remove bottom border */
+  .stat-item:nth-child(5),
+  .stat-item:last-child { border-bottom: none; }
+  .kecamatan-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-badge { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-container { padding: 0 20px; }
+  .hero { justify-content: center; }
+  .hero-content { margin-left: 0; padding: 0 24px; text-align: center; max-width: 100%; }
+  .hero-actions { justify-content: center; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-desc  { font-size: 0.95rem; margin: 0 auto 2rem; }
+  .hero-meta { justify-content: center; }
+  .hero-overlay {
+    background: rgba(3,12,6,0.72);
+  }
+  .kecamatan-section { padding: 64px 0; }
+  .kecamatan-section .section-header,
+  .kecamatan-section .kecamatan-grid { padding-left: 20px; padding-right: 20px; }
+  .modal-header { flex-direction: row; flex-wrap: wrap; padding: 1.4rem 1.25rem 1rem; }
+  .modal-body { padding: 1.25rem; }
+  .modal-stats-row { padding: 1rem 1.25rem; }
+  .modal-data-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-info { text-align: center; }
+  #modalLeafletMap { height: 220px; }
+  .modal-map-icon { width: 60px; height: 60px; }
+  .modal-map-icon svg { width: 44px; height: 44px; }
+  .stats-container { padding: 0; }
+  .stat-item { padding: 36px 20px; }
+}
+@media (max-width: 540px) {
+  .kecamatan-grid { grid-template-columns: 1fr; }
+  .stats-container { grid-template-columns: 1fr 1fr; }
+}
