@@ -675,11 +675,13 @@ function initCounters() {
 }
 
 function animateCounter(el) {
+  if (el.classList.contains('stat-static')) return;
   const target = parseInt(el.dataset.target, 10);
+  const start  = target > 1900 ? target - 12 : 0;
   const duration = 1800;
   const step = 16;
-  const increment = target / (duration / step);
-  let current = 0;
+  const increment = (target - start) / (duration / step);
+  let current = start;
   const timer = setInterval(() => {
     current += increment;
     if (current >= target) { current = target; clearInterval(timer); }
