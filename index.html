@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GQnc=" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -22,6 +22,8 @@
     <a href="#beranda">Beranda</a>
     <a href="#statistik">Statistik</a>
     <a href="#kecamatan">Kecamatan</a>
+    <a href="#metodologi">Metodologi</a>
+    <a href="#komparasi">Komparasi</a>
     <a href="#tentang">Tentang</a>
   </div>
 
@@ -39,6 +41,8 @@
         <a href="#beranda" class="nav-link active">Beranda</a>
         <a href="#statistik" class="nav-link">Statistik</a>
         <a href="#kecamatan" class="nav-link">Kecamatan</a>
+        <a href="#metodologi" class="nav-link">Metodologi</a>
+        <a href="#komparasi" class="nav-link">Komparasi</a>
         <a href="#tentang" class="nav-link">Tentang</a>
       </div>
       <div class="nav-badge">
@@ -105,7 +109,7 @@
           Data Statistik Wilayah
         </div>
         <h2 class="stats-section-title">Kubu Raya dalam <span class="gradient-text">Angka</span></h2>
-        <p class="stats-section-desc">Data resmi Kabupaten Kubu Raya berdasarkan BPS dan Dinas Pertanian Kalimantan Barat</p>
+        <p class="stats-section-desc">Data resmi BPS Kabupaten Kubu Raya dan hasil analisis Sentinel-2 SR (2022–2024) Google Earth Engine</p>
       </div>
 
       <div class="stats-container">
@@ -177,10 +181,11 @@
             </svg>
           </div>
           <div class="stat-value-wrap">
-            <span class="stat-number stat-static">20+</span>
+            <span class="stat-number" data-target="56">0</span>
+            <span class="stat-suffix">Rb ton</span>
           </div>
-          <div class="stat-label">Komoditas Pertanian</div>
-          <div class="stat-sub">Produk unggulan lintas kecamatan</div>
+          <div class="stat-label">Produksi Padi 2023</div>
+          <div class="stat-sub">Turun 45,8% dari 103.725 ton (2018)</div>
         </div>
 
         <div class="stat-item reveal reveal-delay-3">
@@ -235,9 +240,9 @@
             <h3 class="kec-name">Sungai Raya</h3>
             <p class="kec-tagline">Ibu Kota Kabupaten</p>
             <div class="kec-tags">
-              <span class="tag">🍍 Nanas</span>
-              <span class="tag">🌾 Padi</span>
-              <span class="tag">🥦 Hortikultura</span>
+              <span class="tag">Nanas</span>
+              <span class="tag">Padi</span>
+              <span class="tag">Hortikultura</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -263,9 +268,9 @@
             <h3 class="kec-name">Sungai Kakap</h3>
             <p class="kec-tagline">Sentra Kelapa & Pinang</p>
             <div class="kec-tags">
-              <span class="tag">🥥 Kelapa</span>
-              <span class="tag">🌴 Pinang</span>
-              <span class="tag">🌾 Padi</span>
+              <span class="tag">Kelapa</span>
+              <span class="tag">Pinang</span>
+              <span class="tag">Padi</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -291,9 +296,9 @@
             <h3 class="kec-name">Rasau Jaya</h3>
             <p class="kec-tagline">Kawasan Transmigrasi</p>
             <div class="kec-tags">
-              <span class="tag">🍉 Semangka</span>
-              <span class="tag">🥥 Kelapa</span>
-              <span class="tag">🌾 Padi</span>
+              <span class="tag">Semangka</span>
+              <span class="tag">Kelapa</span>
+              <span class="tag">Padi</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -319,9 +324,9 @@
             <h3 class="kec-name">Sungai Ambawang</h3>
             <p class="kec-tagline">Pengembangan Kopi Robusta</p>
             <div class="kec-tags">
-              <span class="tag">☕ Kopi</span>
-              <span class="tag">🌽 Jagung</span>
-              <span class="tag">🌶️ Cabai</span>
+              <span class="tag">Kopi</span>
+              <span class="tag">Jagung</span>
+              <span class="tag">Cabai</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -347,8 +352,8 @@
             <h3 class="kec-name">Kubu</h3>
             <p class="kec-tagline">Kelapa Hibrida & Gula Merah</p>
             <div class="kec-tags">
-              <span class="tag">🥥 Kelapa Hibrida</span>
-              <span class="tag">🍬 Gula Merah</span>
+              <span class="tag">Kelapa Hibrida</span>
+              <span class="tag">Gula Merah</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -374,9 +379,9 @@
             <h3 class="kec-name">Batu Ampar</h3>
             <p class="kec-tagline">Wilayah Pesisir Kalimantan</p>
             <div class="kec-tags">
-              <span class="tag">🥥 Kelapa</span>
-              <span class="tag">🌿 Sagu</span>
-              <span class="tag">🐟 Perikanan</span>
+              <span class="tag">Kelapa</span>
+              <span class="tag">Sagu</span>
+              <span class="tag">Perikanan</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -402,9 +407,9 @@
             <h3 class="kec-name">Teluk Pakedai</h3>
             <p class="kec-tagline">Potensi Perairan Pesisir</p>
             <div class="kec-tags">
-              <span class="tag">🌿 Sagu</span>
-              <span class="tag">🥥 Kelapa</span>
-              <span class="tag">🐟 Perikanan</span>
+              <span class="tag">Sagu</span>
+              <span class="tag">Kelapa</span>
+              <span class="tag">Perikanan</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -430,9 +435,9 @@
             <h3 class="kec-name">Terentang</h3>
             <p class="kec-tagline">Kawasan Hutan & Perkebunan</p>
             <div class="kec-tags">
-              <span class="tag">🌳 Karet</span>
-              <span class="tag">🥥 Kelapa</span>
-              <span class="tag">🍯 Madu</span>
+              <span class="tag">Karet</span>
+              <span class="tag">Kelapa</span>
+              <span class="tag">Madu</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -458,9 +463,9 @@
             <h3 class="kec-name">Kuala Mandor B</h3>
             <p class="kec-tagline">Pengembangan Pertanian Organik</p>
             <div class="kec-tags">
-              <span class="tag">🌳 Karet</span>
-              <span class="tag">🥬 Sayuran</span>
-              <span class="tag">🌾 Padi</span>
+              <span class="tag">Karet</span>
+              <span class="tag">Sayuran</span>
+              <span class="tag">Padi</span>
             </div>
           </div>
           <div class="kec-cta">
@@ -473,9 +478,199 @@
     </div>
   </section>
 
+  <!-- ===== METODOLOGI ===== -->
+  <section class="metodologi-section reveal" id="metodologi">
+    <div class="section-inner">
+      <div class="section-label">Penelitian PDM — Untan</div>
+      <h2 class="section-heading">Metodologi Analisis</h2>
+      <p class="section-sub">Kesesuaian lahan dihitung menggunakan metode <strong>Simple Additive Weighting (SAW)</strong> dengan empat parameter agroklimat berbasis data penginderaan jauh Google Earth Engine (2022–2024).</p>
+
+      <div class="metod-grid">
+
+        <!-- Formula SAW -->
+        <div class="metod-card metod-card--formula">
+          <div class="metod-card-head">
+            <div class="metod-card-icon">∑</div>
+            <h3 class="metod-card-title">Formula SAW</h3>
+          </div>
+          <div class="saw-formula">
+            <div class="saw-formula-main">S<sub>i</sub> = &Sigma; (w<sub>j</sub> &times; r<sub>ij</sub>)</div>
+            <div class="saw-formula-legend">
+              <div><span class="fl-var">S<sub>i</sub></span> Skor kesesuaian komoditas ke-<em>i</em></div>
+              <div><span class="fl-var">w<sub>j</sub></span> Bobot kriteria ke-<em>j</em></div>
+              <div><span class="fl-var">r<sub>ij</sub></span> Nilai ternormalisasi kriteria <em>j</em> pada komoditas <em>i</em></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bobot Kriteria -->
+        <div class="metod-card">
+          <div class="metod-card-head">
+            <div class="metod-card-icon">⚖</div>
+            <h3 class="metod-card-title">Bobot Kriteria</h3>
+          </div>
+          <div class="metod-weights">
+            <div class="weight-row">
+              <span class="wr-name">Curah Hujan</span>
+              <div class="wr-track"><div class="wr-bar" style="--w:30%"></div></div>
+              <span class="wr-pct">30%</span>
+            </div>
+            <div class="weight-row">
+              <span class="wr-name">Suhu Udara</span>
+              <div class="wr-track"><div class="wr-bar" style="--w:25%"></div></div>
+              <span class="wr-pct">25%</span>
+            </div>
+            <div class="weight-row">
+              <span class="wr-name">Elevasi</span>
+              <div class="wr-track"><div class="wr-bar" style="--w:25%"></div></div>
+              <span class="wr-pct">25%</span>
+            </div>
+            <div class="weight-row">
+              <span class="wr-name">Jenis Tanah</span>
+              <div class="wr-track"><div class="wr-bar" style="--w:20%"></div></div>
+              <span class="wr-pct">20%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Matriks Nilai -->
+        <div class="metod-card">
+          <div class="metod-card-head">
+            <div class="metod-card-icon">r</div>
+            <h3 class="metod-card-title">Nilai Normalisasi (r)</h3>
+          </div>
+          <div class="metod-matrix">
+            <div class="mx-row mx-row--cocok">
+              <span class="mx-dot"></span>
+              <div class="mx-body"><span class="mx-status">Sesuai</span><span class="mx-desc">Dalam rentang optimal</span></div>
+              <span class="mx-val">1.00</span>
+            </div>
+            <div class="mx-row mx-row--batas">
+              <span class="mx-dot"></span>
+              <div class="mx-body"><span class="mx-status">Batas</span><span class="mx-desc">Dalam rentang toleran</span></div>
+              <span class="mx-val">0.50</span>
+            </div>
+            <div class="mx-row mx-row--tidak">
+              <span class="mx-dot"></span>
+              <div class="mx-body"><span class="mx-status">Tidak</span><span class="mx-desc">Di luar rentang toleran</span></div>
+              <span class="mx-val">0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kelas Kesesuaian -->
+        <div class="metod-card">
+          <div class="metod-card-head">
+            <div class="metod-card-icon">S</div>
+            <h3 class="metod-card-title">Kelas Kesesuaian</h3>
+          </div>
+          <div class="metod-kelas">
+            <div class="kelas-row kelas--s1">
+              <span class="kelas-badge">S1</span>
+              <span class="kelas-name">Sangat Cocok</span>
+              <span class="kelas-range">≥ 0.80</span>
+            </div>
+            <div class="kelas-row kelas--s2">
+              <span class="kelas-badge">S2</span>
+              <span class="kelas-name">Cocok</span>
+              <span class="kelas-range">0.60 – 0.79</span>
+            </div>
+            <div class="kelas-row kelas--s3">
+              <span class="kelas-badge">S3</span>
+              <span class="kelas-name">Cukup Sesuai</span>
+              <span class="kelas-range">0.40 – 0.59</span>
+            </div>
+            <div class="kelas-row kelas--n">
+              <span class="kelas-badge">N</span>
+              <span class="kelas-name">Kurang Sesuai</span>
+              <span class="kelas-range">< 0.40</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /metod-grid -->
+
+      <!-- Sumber Data -->
+      <div class="metod-sources">
+        <h3 class="metod-sources-title">Sumber Data — Google Earth Engine (Periode 2022–2024)</h3>
+        <div class="metod-sources-grid">
+          <div class="src-card">
+            <div class="src-icon">🌧️</div>
+            <div class="src-body">
+              <div class="src-param">Curah Hujan</div>
+              <div class="src-dataset">CHIRPS Daily v2.0</div>
+              <div class="src-detail">UCSB-CHG &middot; Resolusi 5.5 km</div>
+            </div>
+          </div>
+          <div class="src-card">
+            <div class="src-icon">🌡️</div>
+            <div class="src-body">
+              <div class="src-param">Suhu Udara</div>
+              <div class="src-dataset">ERA5-Land Monthly</div>
+              <div class="src-detail">ECMWF &middot; Resolusi 11 km</div>
+            </div>
+          </div>
+          <div class="src-card">
+            <div class="src-icon">⛰️</div>
+            <div class="src-body">
+              <div class="src-param">Elevasi</div>
+              <div class="src-dataset">SRTM DEM v3</div>
+              <div class="src-detail">NASA / USGS &middot; Resolusi 30 m</div>
+            </div>
+          </div>
+          <div class="src-card">
+            <div class="src-icon">🪨</div>
+            <div class="src-body">
+              <div class="src-param">Jenis Tanah</div>
+              <div class="src-dataset">OpenLandMap Texture</div>
+              <div class="src-detail">OpenGeoHub &middot; Resolusi 250 m</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== KOMPARASI ===== -->
+  <section class="komparasi-section reveal" id="komparasi">
+    <div class="section-inner">
+      <div class="section-label">Visualisasi Data</div>
+      <h2 class="section-heading">Komparasi Kesesuaian Lahan</h2>
+      <p class="section-sub">Perbandingan skor kesesuaian SAW antar kecamatan dan antar komoditas secara interaktif.</p>
+
+      <div class="chart-tabs">
+        <button class="chart-tab active" data-tab="Kecamatan">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          Per Kecamatan
+        </button>
+        <button class="chart-tab" data-tab="Komoditas">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>
+          Per Komoditas
+        </button>
+      </div>
+
+      <div class="chart-panel active" id="panelKecamatan">
+        <p class="chart-desc">Rata-rata skor kesesuaian SAW dari seluruh komoditas relevan di setiap kecamatan. Diurutkan dari tertinggi.</p>
+        <div class="cmp-chart" id="chartKecamatan"></div>
+      </div>
+
+      <div class="chart-panel" id="panelKomoditas">
+        <div class="crop-selector-row">
+          <label class="crop-sel-label" for="cropSelect">Pilih Komoditas</label>
+          <select id="cropSelect" class="crop-select"></select>
+        </div>
+        <p class="chart-desc" id="chartKomoditasDesc"></p>
+        <div class="cmp-chart" id="chartKomoditas"></div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ===== FOOTER ===== -->
   <footer class="footer" id="tentang">
     <div class="footer-inner">
+
       <div class="footer-brand">
         <img src="logo.png" alt="AgroRaya Logo" class="logo-img footer-logo-img" />
         <div>
@@ -483,10 +678,29 @@
           <div class="footer-subtitle">SIG Pertanian · Kabupaten Kubu Raya · Kalimantan Barat</div>
         </div>
       </div>
-      <div class="footer-info">
-        <p>Data bersumber dari BPS Kabupaten Kubu Raya, Dinas Pertanian, dan sumber resmi pemerintah daerah.</p>
-        <p class="footer-copy">© 2025 AgroRaya · Universitas Tanjungpura</p>
+
+      <div class="footer-research">
+        <div class="footer-research-title">Penelitian Dosen Pemula (PDM) — Universitas Tanjungpura</div>
+        <p class="footer-research-judul">"Analisis Kesesuaian Lahan Komoditas Pertanian Unggulan Berbasis SIG untuk Ketahanan Pangan Kabupaten Kubu Raya"</p>
+        <div class="footer-research-team">
+          <span class="footer-team-item">Ibnu Arif, S.Kom., M.Cs. <em>(Ketua)</em></span>
+          <span class="footer-team-sep">·</span>
+          <span class="footer-team-item">Safriadi, S.T., M.T. <em>(Anggota)</em></span>
+        </div>
+        <div class="footer-research-meta">
+          <span class="footer-meta-tag">Sentinel-2 SR 2022–2024</span>
+          <span class="footer-meta-tag">Google Earth Engine</span>
+          <span class="footer-meta-tag">Weighted Overlay GIS</span>
+          <span class="footer-meta-tag">QGIS Zonal Statistics</span>
+        </div>
       </div>
+
+      <div class="footer-info">
+        <p class="footer-datasrc"><strong>Sumber Data:</strong> BPS Kabupaten Kubu Raya · Copernicus Sentinel-2 SR (ESA) · GADM Level 3 · Oxford Accessibility Map · OpenLandMap Soil · USGS SRTM DEM</p>
+        <p class="footer-method"><strong>Metodologi:</strong> Analisis kesesuaian lahan menggunakan citra multitemporal Sentinel-2 SR Harmonized (2022–2024) diproses di Google Earth Engine. Skor Weighted Overlay dihitung berdasarkan 5 kriteria: NDVI (30%), Jenis Tanah (25%), Ketersediaan Air/NDWI (20%), Kemiringan Lereng/SRTM (15%), Aksesibilitas (10%). Kelas S2 (Cukup Sesuai, skor 2,5–3,5) mencakup seluruh 9 kecamatan Kubu Raya.</p>
+        <p class="footer-copy">© 2025–2026 AgroRaya · Program Studi Informatika · Universitas Tanjungpura · Pontianak, Kalimantan Barat</p>
+      </div>
+
     </div>
   </footer>
 
@@ -555,10 +769,21 @@
           <ul class="modal-potensi" id="modalPotensi"></ul>
         </div>
 
+        <div class="modal-section">
+          <h3 class="modal-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/><circle cx="12" cy="12" r="3"/></svg>
+            Analisis Syarat Tumbuh
+          </h3>
+          <div id="modalSyaratTumbuh"></div>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="data/kesesuaian_data_v2.js?v=20260704"></script>
+  <script src="data/syarat_tumbuh.js?v=20260704"></script>
+  <script src="script.js?v=20260704" defer></script>
 </body>
 </html>
+
