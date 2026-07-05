@@ -463,7 +463,6 @@ function renderSyaratTumbuh(kecId) {
     return `
       <div class="crop-st-card level-${hasil.level}" data-crop-key="${id}" role="button" tabindex="0" aria-expanded="false">
         <div class="crop-rank-badge">${rank + 1}</div>
-        <div class="crop-icon-bubble">${syarat.icon}</div>
         <div class="crop-st-info">
           <span class="crop-st-name">${syarat.nama}</span>
           <span class="crop-st-cat">${syarat.kategori}</span>

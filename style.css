@@ -693,16 +693,6 @@ body::before {
   background: var(--accent); color: #fff; border-color: var(--accent);
 }
 
-/* Emoji icon */
-.crop-icon-bubble {
-  width: 40px; height: 40px; border-radius: 10px;
-  background: linear-gradient(135deg, #E8F5EE 0%, #F0F7F3 100%);
-  border: 1px solid var(--accent-border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; flex-shrink: 0;
-  transition: transform 0.2s;
-}
-.crop-st-card:hover .crop-icon-bubble { transform: scale(1.08); }
 
 .crop-st-info { flex: 1; min-width: 0; }
 .crop-st-name { font-size: 0.84rem; font-weight: 700; color: var(--text-1); display: block; line-height: 1.2; }
@@ -710,7 +700,7 @@ body::before {
 
 /* Mini score bar */
 .crop-score-track {
-  height: 4px; background: rgba(30,107,60,0.08); border-radius: 99px;
+  height: 4px; background: rgba(0,0,0,0.14); border-radius: 99px;
   overflow: hidden; margin-top: 6px;
 }
 .crop-score-fill { height: 100%; border-radius: 99px; transition: width 0.7s cubic-bezier(0.16,1,0.3,1); }
@@ -828,8 +818,7 @@ body::before {
 @media (max-width: 600px) {
   .st-iklim-bar { grid-template-columns: repeat(2, 1fr); }
   .crop-vc-row  { display: none; }
-  .crop-icon-bubble { width: 34px; height: 34px; font-size: 1.15rem; }
-  .crop-st-card { gap: 0.6rem; padding: 0.75rem 0.75rem; }
+  .crop-st-card { gap: 0.6rem; padding: 0.75rem; }
   .saw-td-ideal { display: none; }
   .saw-table th:nth-child(4), .saw-table td:nth-child(4) { display: none; }
 }
