@@ -354,32 +354,33 @@ function buildSAWPanel(iklim, syarat, hasil) {
     5:'Silty Clay Loam', 6:'Sandy Clay Loam', 7:'Loam', 8:'Silty Loam',
     9:'Sandy Loam', 10:'Silt', 11:'Loamy Sand', 12:'Sand'
   };
+  // Urutan tampilan: bobot terbesar → terkecil; idx = posisi asli di SAW_BOBOT/nilaiArr/checks
   const kriteria = [
     {
-      nama: 'Curah Hujan', bobot: SAW_BOBOT[0],
-      aktual: `${iklim.curahHujan.toLocaleString('id')} mm/tahun`,
-      ideal: `Optimal ${syarat.curah_hujan.optMin.toLocaleString('id')}–${syarat.curah_hujan.optMax.toLocaleString('id')} mm/tahun`
+      idx: 3, nama: 'Jenis Tanah', bobot: SAW_BOBOT[3],
+      aktual: iklim.namaTanah.split(' (')[0],
+      ideal: syarat.tanah.cocok.map(k => tanahName[k] || k).join(', ')
     },
     {
-      nama: 'Suhu Udara', bobot: SAW_BOBOT[1],
-      aktual: `${iklim.suhu.toFixed(1)} °C`,
-      ideal: `Optimal ${syarat.suhu.optMin}–${syarat.suhu.optMax} °C`
-    },
-    {
-      nama: 'Elevasi', bobot: SAW_BOBOT[2],
+      idx: 2, nama: 'Elevasi', bobot: SAW_BOBOT[2],
       aktual: `${iklim.elevasi} m dpl`,
       ideal: `${syarat.elevasi.min}–${syarat.elevasi.max} m dpl`
     },
     {
-      nama: 'Jenis Tanah', bobot: SAW_BOBOT[3],
-      aktual: iklim.namaTanah.split(' (')[0],
-      ideal: syarat.tanah.cocok.map(k => tanahName[k] || k).join(', ')
+      idx: 0, nama: 'Curah Hujan', bobot: SAW_BOBOT[0],
+      aktual: `${iklim.curahHujan.toLocaleString('id')} mm/tahun`,
+      ideal: `Optimal ${syarat.curah_hujan.optMin.toLocaleString('id')}–${syarat.curah_hujan.optMax.toLocaleString('id')} mm/tahun`
+    },
+    {
+      idx: 1, nama: 'Suhu Udara', bobot: SAW_BOBOT[1],
+      aktual: `${iklim.suhu.toFixed(1)} °C`,
+      ideal: `Optimal ${syarat.suhu.optMin}–${syarat.suhu.optMax} °C`
     }
   ];
   const statusLbl = { cocok: 'Sesuai', batas: 'Batas', tidak: 'Tidak Sesuai' };
-  const rows = kriteria.map((k, i) => {
-    const st = hasil.checks[i];
-    const ni = hasil.nilaiArr[i];
+  const rows = kriteria.map((k) => {
+    const st = hasil.checks[k.idx];
+    const ni = hasil.nilaiArr[k.idx];
     const wb = (k.bobot * ni).toFixed(2);
     return `<tr>
       <td class="saw-td-name">${k.nama}</td>
