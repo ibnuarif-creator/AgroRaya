@@ -654,26 +654,74 @@ body::before {
 .st-src.estimasi { color: #b45309; }
 
 /* Crop list */
-.st-crops-grid { display: flex; flex-direction: column; }
+.st-crops-grid { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.25rem; }
 
 .crop-st-card {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.6rem 0.5rem; cursor: pointer;
-  border-bottom: 1px solid rgba(30,107,60,0.07);
-  border-radius: 4px;
-  transition: background 0.15s;
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F7FCF9 100%);
+  border: 1px solid rgba(30,107,60,0.10);
+  border-left: 3px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(13,31,22,0.05);
+  cursor: pointer;
+  transition: box-shadow 0.2s, border-color 0.2s, background 0.2s, transform 0.15s;
 }
-.crop-st-card:last-of-type { border-bottom: none; }
-.crop-st-card:hover    { background: var(--surface-2); }
-.crop-st-card.active   { background: var(--surface-2); }
+.crop-st-card.level-sangat-cocok { border-left-color: #15803d; }
+.crop-st-card.level-cocok        { border-left-color: #65a30d; }
+.crop-st-card.level-cukup        { border-left-color: #f59e0b; }
+.crop-st-card.level-kurang       { border-left-color: #9ca3af; }
+.crop-st-card:hover {
+  box-shadow: 0 4px 18px rgba(30,107,60,0.14);
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+}
+.crop-st-card.active {
+  background: linear-gradient(135deg, #EDF7F1 0%, #E4F2EA 100%);
+  border-color: var(--accent-border);
+  box-shadow: 0 2px 12px rgba(30,107,60,0.12);
+}
+
+/* Rank badge */
+.crop-rank-badge {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent-ghost); border: 1px solid var(--accent-border);
+  font-size: 0.62rem; font-weight: 800; color: var(--accent);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.crop-st-card.active .crop-rank-badge {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+
+/* Emoji icon */
+.crop-icon-bubble {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: linear-gradient(135deg, #E8F5EE 0%, #F0F7F3 100%);
+  border: 1px solid var(--accent-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.crop-st-card:hover .crop-icon-bubble { transform: scale(1.08); }
 
 .crop-st-info { flex: 1; min-width: 0; }
-.crop-st-name { font-size: 0.80rem; font-weight: 700; color: var(--text-1); display: block; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.crop-st-cat  { font-size: 0.60rem; color: var(--text-3); white-space: nowrap; }
+.crop-st-name { font-size: 0.84rem; font-weight: 700; color: var(--text-1); display: block; line-height: 1.2; }
+.crop-st-cat  { font-size: 0.62rem; color: var(--text-3); display: block; margin-top: 1px; }
+
+/* Mini score bar */
+.crop-score-track {
+  height: 4px; background: rgba(30,107,60,0.08); border-radius: 99px;
+  overflow: hidden; margin-top: 6px;
+}
+.crop-score-fill { height: 100%; border-radius: 99px; transition: width 0.7s cubic-bezier(0.16,1,0.3,1); }
+.crop-score-fill.level-fill-sangat-cocok { background: linear-gradient(90deg, #15803d, #22c55e); }
+.crop-score-fill.level-fill-cocok        { background: linear-gradient(90deg, #4d7c0f, #84cc16); }
+.crop-score-fill.level-fill-cukup        { background: linear-gradient(90deg, #b45309, #fbbf24); }
+.crop-score-fill.level-fill-kurang       { background: linear-gradient(90deg, #b91c1c, #f87171); }
 
 /* Variable dots */
-.crop-vc-row { display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0; }
-.vc-col { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 44px; flex-shrink: 0; }
+.crop-vc-row { display: flex; gap: 0.4rem; align-items: center; flex-shrink: 0; }
+.vc-col { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 40px; flex-shrink: 0; }
 .vc-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
 .vc-dot.cocok { background: #16a34a; }
 .vc-dot.batas { background: #f59e0b; }
@@ -694,23 +742,32 @@ body::before {
 .st-legend-dot.batas { background: #f59e0b; }
 .st-legend-dot.tidak { background: #dc2626; }
 
-/* Right side: status + SAW score + chevron — lebar tetap agar posisi dot tidak bergeser */
-.crop-st-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; width: 155px; justify-content: flex-end; }
-.crop-badge-st { font-size: 0.68rem; font-weight: 700; white-space: nowrap; min-width: 82px; text-align: right; }
+/* Right side */
+.crop-st-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.crop-badge-block { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.crop-badge-st { font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
 .bdg-sangat-cocok { color: #15803d; }
-.bdg-cocok        { color: #1e6b3c; }
+.bdg-cocok        { color: #4d7c0f; }
 .bdg-cukup        { color: #b45309; }
 .bdg-kurang       { color: #9ca3af; }
-
 .crop-saw-val {
-  font-size: 0.72rem; font-weight: 800; color: var(--text-3);
-  background: var(--bg-alt); padding: 1px 6px; border-radius: 3px;
+  font-size: 0.75rem; font-weight: 800; color: var(--accent);
+  font-family: 'Courier New', monospace; letter-spacing: -0.02em;
 }
+
+/* Chevron button */
+.crop-chevron-btn {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--accent-ghost); border: 1px solid var(--accent-border);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.crop-st-card:hover .crop-chevron-btn { background: rgba(30,107,60,0.12); }
+.crop-st-card.active .crop-chevron-btn { background: var(--accent); border-color: var(--accent); }
 .crop-chevron {
-  color: var(--text-3); flex-shrink: 0;
-  transition: transform 0.2s;
+  color: var(--accent); flex-shrink: 0; transition: transform 0.25s;
 }
-.crop-st-card.active .crop-chevron { transform: rotate(180deg); }
+.crop-st-card.active .crop-chevron { transform: rotate(180deg); color: #fff; }
 
 /* SAW Detail panel */
 .crop-detail-wrapper { padding: 0 0.25rem 0.75rem; }
@@ -771,6 +828,8 @@ body::before {
 @media (max-width: 600px) {
   .st-iklim-bar { grid-template-columns: repeat(2, 1fr); }
   .crop-vc-row  { display: none; }
+  .crop-icon-bubble { width: 34px; height: 34px; font-size: 1.15rem; }
+  .crop-st-card { gap: 0.6rem; padding: 0.75rem 0.75rem; }
   .saw-td-ideal { display: none; }
   .saw-table th:nth-child(4), .saw-table td:nth-child(4) { display: none; }
 }

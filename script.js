@@ -443,7 +443,11 @@ function renderSyaratTumbuh(kecId) {
     </div>
     <div class="st-src-bar">${srcNote}</div>`;
 
-  const varLabels = ['Hujan', 'Suhu', 'Elevasi', 'Tanah'];
+  // Urutan dot sesuai bobot: Tanah(3) → Elevasi(2) → Hujan(0) → Suhu(1)
+  const varOrder = [
+    { label: 'Tanah', idx: 3 }, { label: 'Elevasi', idx: 2 },
+    { label: 'Hujan', idx: 0 }, { label: 'Suhu', idx: 1 }
+  ];
   const d = kecamatanData[kecId];
   const relevantCrops = (d && d.relevantCrops) ? d.relevantCrops : Object.keys(syaratTumbuhDB);
   const items = Object.entries(syaratTumbuhDB)
@@ -451,21 +455,29 @@ function renderSyaratTumbuh(kecId) {
     .map(([id, syarat]) => ({ id, syarat, hasil: hitungSkorKrop(iklim, syarat) }))
     .sort((a, b) => b.hasil.sawScore - a.hasil.sawScore);
 
-  const cropsHTML = items.map(({ id, syarat, hasil }) => {
-    const dots = hasil.checks.map((s, i) => `
-      <div class="vc-col"><div class="vc-dot ${s}"></div><div class="vc-lbl">${varLabels[i]}</div></div>`
+  const cropsHTML = items.map(({ id, syarat, hasil }, rank) => {
+    const dots = varOrder.map(v => `
+      <div class="vc-col"><div class="vc-dot ${hasil.checks[v.idx]}"></div><div class="vc-lbl">${v.label}</div></div>`
     ).join('');
+    const barW = Math.round(hasil.sawScore * 100);
     return `
-      <div class="crop-st-card" data-crop-key="${id}" role="button" tabindex="0" aria-expanded="false">
+      <div class="crop-st-card level-${hasil.level}" data-crop-key="${id}" role="button" tabindex="0" aria-expanded="false">
+        <div class="crop-rank-badge">${rank + 1}</div>
+        <div class="crop-icon-bubble">${syarat.icon}</div>
         <div class="crop-st-info">
           <span class="crop-st-name">${syarat.nama}</span>
           <span class="crop-st-cat">${syarat.kategori}</span>
+          <div class="crop-score-track"><div class="crop-score-fill level-fill-${hasil.level}" style="width:${barW}%"></div></div>
         </div>
         <div class="crop-vc-row">${dots}</div>
         <div class="crop-st-right">
-          <span class="crop-badge-st bdg-${hasil.level}">${hasil.label}</span>
-          <span class="crop-saw-val">${hasil.sawScore.toFixed(2)}</span>
-          <svg class="crop-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          <div class="crop-badge-block">
+            <span class="crop-badge-st bdg-${hasil.level}">${hasil.label}</span>
+            <span class="crop-saw-val">${hasil.sawScore.toFixed(2)}</span>
+          </div>
+          <div class="crop-chevron-btn">
+            <svg class="crop-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
         </div>
       </div>
       <div class="crop-detail-wrapper" data-detail="${id}" hidden>${buildSAWPanel(iklim, syarat, hasil)}</div>`;
