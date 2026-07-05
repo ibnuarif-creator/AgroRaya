@@ -294,7 +294,7 @@ const kecamatanData = {
 // Klasifikasi: ≥0.80 Sangat Cocok | ≥0.60 Cocok |
 //              ≥0.40 Cukup Sesuai | <0.40 Kurang Sesuai
 // ============================================================
-const SAW_BOBOT = [0.30, 0.25, 0.25, 0.20];
+const SAW_BOBOT = [0.20, 0.15, 0.30, 0.35]; // CH, Suhu, Elevasi, Tanah
 
 function cekVariabel(nilai, r) {
   if (r.optMin !== undefined) {
