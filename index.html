@@ -531,31 +531,33 @@
               <span class="wr-pct">20%</span>
             </div>
           </div>
+          <p style="font-size:0.68rem;color:var(--text-3);margin-top:0.85rem;line-height:1.65;">Bobot ditetapkan berdasarkan <em>expert judgment</em> mengacu pada kerangka evaluasi lahan FAO (Sys et al., 1993) dan Petunjuk Teknis Evaluasi Lahan BBSDLP (2011), dengan mempertimbangkan dominansi iklim tropika basah Kalimantan Barat sebagai faktor penentu utama produktivitas lahan.</p>
         </div>
 
         <!-- Matriks Nilai -->
         <div class="metod-card">
           <div class="metod-card-head">
             <div class="metod-card-icon">r</div>
-            <h3 class="metod-card-title">Nilai Normalisasi (r)</h3>
+            <h3 class="metod-card-title">Normalisasi r — Fungsi Trapesoid</h3>
           </div>
           <div class="metod-matrix">
             <div class="mx-row mx-row--cocok">
               <span class="mx-dot"></span>
-              <div class="mx-body"><span class="mx-status">Sesuai</span><span class="mx-desc">Dalam rentang optimal</span></div>
+              <div class="mx-body"><span class="mx-status">Zona Optimal</span><span class="mx-desc">Nilai dalam [optMin, optMax]</span></div>
               <span class="mx-val">1.00</span>
             </div>
             <div class="mx-row mx-row--batas">
               <span class="mx-dot"></span>
-              <div class="mx-body"><span class="mx-status">Batas</span><span class="mx-desc">Dalam rentang toleran</span></div>
-              <span class="mx-val">0.50</span>
+              <div class="mx-body"><span class="mx-status">Zona Transisi</span><span class="mx-desc">Antara batas &amp; optimal — interpolasi linear</span></div>
+              <span class="mx-val">0–1</span>
             </div>
             <div class="mx-row mx-row--tidak">
               <span class="mx-dot"></span>
-              <div class="mx-body"><span class="mx-status">Tidak</span><span class="mx-desc">Di luar rentang toleran</span></div>
+              <div class="mx-body"><span class="mx-status">Di Luar Toleransi</span><span class="mx-desc">Nilai &lt; min atau &gt; max</span></div>
               <span class="mx-val">0.00</span>
             </div>
           </div>
+          <p style="font-size:0.68rem;color:var(--text-3);margin-top:0.75rem;line-height:1.6;">Jenis tanah bersifat kategorikal: Sesuai = 1,00 &middot; Batas = 0,50 &middot; Tidak = 0,00</p>
         </div>
 
         <!-- Kelas Kesesuaian -->

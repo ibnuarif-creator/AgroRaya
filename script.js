@@ -311,16 +311,35 @@ function cekTanah(kode, t) {
   return 'tidak';
 }
 
+// Normalisasi kontinu — fungsi keanggotaan trapesoid
+// Optimal (optMin–optMax) → 1.0; batas (min/max) → 0.0; transisi → interpolasi linear
+function nilaiVariabel(nilai, r) {
+  if (r.optMin !== undefined) {
+    if (nilai >= r.optMin && nilai <= r.optMax) return 1.0;
+    if (nilai < r.min || nilai > r.max)         return 0.0;
+    if (nilai < r.optMin) return (nilai - r.min)   / (r.optMin - r.min);
+    return 1.0 -           (nilai - r.optMax) / (r.max    - r.optMax);
+  }
+  return (nilai >= r.min && nilai <= r.max) ? 1.0 : 0.0;
+}
+
 function hitungSkorKrop(iklim, syarat) {
+  // checks → label status untuk tampilan (Sesuai / Batas / Tidak)
   const checks = [
     cekVariabel(iklim.curahHujan, syarat.curah_hujan),
     cekVariabel(iklim.suhu,       syarat.suhu),
     cekVariabel(iklim.elevasi,    syarat.elevasi),
     cekTanah(iklim.kodeTanah,     syarat.tanah)
   ];
-  const nilaiMap = { cocok: 1.0, batas: 0.5, tidak: 0.0 };
-  const nilaiArr = checks.map(c => nilaiMap[c]);
-  const sawScore = +nilaiArr.reduce((s, v, i) => s + SAW_BOBOT[i] * v, 0).toFixed(2);
+  // nilaiArr → skor kontinu untuk perhitungan SAW
+  const tanahNilai = { cocok: 1.0, batas: 0.5, tidak: 0.0 };
+  const nilaiArr = [
+    nilaiVariabel(iklim.curahHujan, syarat.curah_hujan),
+    nilaiVariabel(iklim.suhu,       syarat.suhu),
+    nilaiVariabel(iklim.elevasi,    syarat.elevasi),
+    tanahNilai[checks[3]]
+  ];
+  const sawScore = +nilaiArr.reduce((s, v, i) => s + SAW_BOBOT[i] * v, 0).toFixed(3);
   let level, label;
   if      (sawScore >= 0.80) { level = 'sangat-cocok'; label = 'Sangat Cocok';  }
   else if (sawScore >= 0.60) { level = 'cocok';         label = 'Cocok';          }
@@ -385,7 +404,7 @@ function buildSAWPanel(iklim, syarat, hasil) {
         <td class="saw-td-c saw-total-val st-lvl-${hasil.level}">${hasil.sawScore.toFixed(2)}</td>
       </tr></tfoot>
     </table>
-    <p class="saw-note">SAW (Simple Additive Weighting) &mdash; Nilai: Sesuai = 1,00 &nbsp;&middot;&nbsp; Batas Toleransi = 0,50 &nbsp;&middot;&nbsp; Tidak Sesuai = 0,00</p>
+    <p class="saw-note">SAW (Simple Additive Weighting) &mdash; Normalisasi <em>r</em> kontinu: Optimal = 1,00; Zona transisi = interpolasi linear 0,00–1,00; Di luar toleransi = 0,00. Jenis tanah (kategorikal): Sesuai = 1,00; Batas = 0,50; Tidak = 0,00.</p>
   </div>`;
 }
 
